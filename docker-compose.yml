@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  minecraft-mod-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Mount the build output back to host
+      - ./build:/app/build
+      # Mount source for development
+      - ./src:/app/src
+    environment:
+      - GRADLE_OPTS=-Xmx4G
+    command: ./gradlew build --no-daemon -Dnet.minecraftforge.gradle.check.certs=false
